@@ -288,29 +288,20 @@ var saveTasks = function() {
 };
 
 var loadTasks = function() {
-    //get Task Items
-    tasks = localStorage.getItem("tasks");
-    console.log(tasks);
-
-    if (!tasks) {
-        tasks = [];
-        return false;
+    var savedTasks = localStorage.getItem("tasks");
+  
+    if (!savedTasks) {
+      return false;
     }
+  
+    savedTasks = JSON.parse(savedTasks);
 
-    //Convert Tasks from strings into an array of Objects
-    tasks = JSON.parse(tasks);
-    console.log(tasks);
-
-    //Iterate through tasks in array and create tasks elements on page
-    for (i = 0; i < tasks.length; i++) {
-        taskIdCounter = tasks[i];
-        var listItemEl = document.createElement("li");
-        listItemEl.className = "task-item";
-        listItemEl.setAttribute("data-task-id", tasks[i].id);
-        listItemEl.setAttribute("draggable:", true);
-        console.log(listItemEl);
+        // loop through savedTasks array
+    for (var i = 0; i < savedTasks.length; i++) {
+        // pass each task object into the `createTaskEl()` function
+        createTaskEl(savedTasks[i]);
     }
-};
+  }
 
 formEl.addEventListener("submit", taskFormHandler);
 
